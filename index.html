@@ -1,1 +1,814 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ToolMitra - Online Tools</title>
 
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f4f7ff;
+color:#222;
+}
+header{
+padding:25px 15px;
+text-align:center;
+color:white;
+background:linear-gradient(135deg,#2563eb,#7c3aed);
+}
+header h1{margin:0;font-size:30px}
+header p{margin:8px 0 0}
+.top{
+padding:15px;
+max-width:700px;
+margin:auto;
+}
+.search{
+width:100%;
+padding:14px;
+border:1px solid #ddd;
+border-radius:12px;
+font-size:16px;
+}
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+padding:15px;
+max-width:800px;
+margin:auto;
+}
+.card{
+background:white;
+padding:18px 10px;
+border-radius:16px;
+box-shadow:0 3px 12px #0001;
+text-align:center;
+cursor:pointer;
+font-weight:bold;
+}
+.card span{
+display:block;
+font-size:30px;
+margin-bottom:8px;
+}
+.screen{
+display:none;
+min-height:100vh;
+background:#f4f7ff;
+}
+.tool{
+max-width:600px;
+margin:auto;
+padding:15px;
+}
+.back{
+border:0;
+background:#222;
+color:white;
+padding:10px 16px;
+border-radius:10px;
+margin-bottom:15px;
+}
+.tool h2{margin-top:5px}
+input,textarea,select{
+width:100%;
+padding:13px;
+margin:7px 0;
+border:1px solid #ccc;
+border-radius:10px;
+font-size:16px;
+}
+button.action{
+width:100%;
+padding:13px;
+border:0;
+border-radius:10px;
+background:#2563eb;
+color:white;
+font-size:16px;
+margin:7px 0;
+}
+.result{
+margin-top:12px;
+padding:15px;
+background:white;
+border-radius:12px;
+font-weight:bold;
+line-height:1.7;
+}
+.dark{background:#111827;color:#eee}
+.dark .card,.dark .result,.dark input,.dark textarea,.dark select{
+background:#1f2937;color:#eee;border-color:#374151;
+}
+.dark .screen{background:#111827}
+.hidden{display:none!important}
+footer{text-align:center;padding:25px;color:#777}
+a{color:#2563eb;font-weight:bold}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🛠️ ToolMitra</h1>
+<p>हर रोज़ के काम के आसान Online Tools</p>
+</header>
+
+<div id="home">
+<div class="top">
+<input id="search" class="search" placeholder="🔍 Tool खोजें..." oninput="searchTools()">
+</div>
+
+<div class="grid">
+
+<div class="card" data-name="Percentage" onclick="openTool('percentage')"><span>📊</span>Percentage</div>
+<div class="card" data-name="Age Calculator" onclick="openTool('age')"><span>🎂</span>Age Calculator</div>
+<div class="card" data-name="EMI Calculator" onclick="openTool('emi')"><span>🏦</span>EMI Calculator</div>
+<div class="card" data-name="GST Calculator" onclick="openTool('gst')"><span>🧾</span>GST Calculator</div>
+<div class="card" data-name="Salary Calculator" onclick="openTool('salary')"><span>💰</span>Salary Calculator</div>
+<div class="card" data-name="Unit Converter" onclick="openTool('unit')"><span>🔄</span>Unit Converter</div>
+<div class="card" data-name="Word Counter" onclick="openTool('word')"><span>📝</span>Word Counter</div>
+<div class="card" data-name="Discount" onclick="openTool('discount')"><span>🏷️</span>Discount</div>
+<div class="card" data-name="SIP Calculator" onclick="openTool('sip')"><span>📈</span>SIP Calculator</div>
+<div class="card" data-name="Profit Loss" onclick="openTool('profit')"><span>💹</span>Profit & Loss</div>
+<div class="card" data-name="FD Calculator" onclick="openTool('fd')"><span>🏛️</span>FD Calculator</div>
+<div class="card" data-name="Simple Interest" onclick="openTool('si')"><span>💵</span>Simple Interest</div>
+<div class="card" data-name="Date Difference" onclick="openTool('date')"><span>📅</span>Date Difference</div>
+<div class="card" data-name="BMI Calculator" onclick="openTool('bmi')"><span>⚖️</span>BMI Calculator</div>
+<div class="card" data-name="Number to Words" onclick="openTool('number')"><span>🔢</span>Number to Words</div>
+<div class="card" data-name="Time Calculator" onclick="openTool('time')"><span>⏰</span>Time Calculator</div>
+<div class="card" data-name="Length Converter" onclick="openTool('length')"><span>📏</span>Length Converter</div>
+<div class="card" data-name="Image Compressor" onclick="openTool('image')"><span>🖼️</span>Image Compressor</div>
+
+</div>
+
+<div id="none" class="hidden" style="text-align:center;padding:20px">
+Tool नहीं मिला।
+</div>
+
+<footer>© ToolMitra</footer>
+</div>
+
+
+<!-- PERCENTAGE -->
+<div id="percentage" class="screen">
+<div class="tool">
+<button class="back" onclick="home()">← Back</button>
+<h2>📊 Percentage Calculator</h2>
+<input id="percentValue" type="number" placeholder="Number">
+<input id="percentTotal" type="number" placeholder="Total">
+<button class="action" onclick="percentCalc()">Calculate</button>
+<div id="percentResult" class="result">Result यहाँ आएगा</div>
+</div>
+</div>
+
+
+<!-- AGE -->
+<div id="age" class="screen">
+<div class="tool">
+<button class="back" onclick="home()">← Back</button>
+<h2>🎂 Age Calculator</h2>
+<input id="dob" type="date">
+<button class="action" onclick="ageCalc()">Calculate Age</button>
+<div id="ageResult" class="result">Result यहाँ आएगा</div>
+</div>
+</div>
+
+
+<!-- EMI -->
+<div id="emi" class="screen">
+<div class="tool">
+<button class="back" onclick="home()">← Back</button>
+<h2>🏦 EMI Calculator</h2>
+<input id="emiPrincipal" type="number" placeholder="Loan Amount">
+<input id="emiRate" type="number" placeholder="Annual Interest %">
+<input id="emiYears" type="number" placeholder="Years">
+<button class="action" onclick="emiCalc()">Calculate EMI</button>
+<div id="emiResult" class="result">Result यहाँ आएगा</div>
+</div>
+</div>
+
+
+<!-- GST -->
+<div id="gst" class="screen">
+<div class="tool">
+<button class="back" onclick="home()">← Back</button>
+<h2>🧾 GST Calculator</h2>
+<input id="gstAmount" type="number" placeholder="Amount">
+<input id="gstRate" type="number" placeholder="GST %">
+<button class="action" onclick="gstCalc()">Calculate GST</button>
+<div id="gstResult" class="result">Result यहाँ आएगा</div>
+</div>
+</div>
+
+
+<!-- SALARY -->
+<div id="salary" class="screen">
+<div class="tool">
+<button class="back" onclick="home()">← Back</button>
+<h2>💰 Salary Calculator</h2>
+<input id="days" type="number" placeholder="काम के दिन">
+<input id="perDay" type="number" placeholder="Per Day Salary">
+<input id="extra" type="number" placeholder="Extra Amount">
+<button class="action" onclick="salaryCalc()">Calculate Salary</button>
+<div id="salaryResult" class="result">Result यहाँ आएगा</div>
+</div>
+</div>
+
+
+<!-- UNIT -->
+<div id="unit" class="screen">
+<div class="tool">
+<button class="back" onclick="home()">← Back</button>
+<h2>🔄 Unit Converter</h2>
+<input id="km" type="number" placeholder="Kilometers">
+<button class="action" onclick="unitCalc()">Convert</button>
+<div id="unitResult" class="result">Result यहाँ आएगा</div>
+</div>
+</div>
+
+
+<!-- WORD -->
+<div id="word" class="screen">
+<div class="tool">
+<button class="back" onclick="home()">← Back</button>
+<h2>📝 Word Counter</h2>
+<textarea id="text" rows="8" placeholder="अपना text लिखें..."></textarea>
+<button class="action" onclick="countWords()">Count Words</button>
+<button class="action" onclick="copyText()">Copy Text</button>
+<div id="wordResult" class="result">Words: 0<br>Characters: 0</div>
+</div>
+</div>
+
+
+<!-- DISCOUNT -->
+<div id="discount" class="screen">
+<div class="tool">
+<button class="back" onclick="home()">← Back</button>
+<h2>🏷️ Discount Calculator</h2>
+<input id="price" type="number" placeholder="Price">
+<input id="discountRate" type="number" placeholder="Discount %">
+<button class="action" onclick="discountCalc()">Calculate</button>
+<div id="discountResult" class="result">Result यहाँ आएगा</div>
+</div>
+</div>
+
+
+<!-- SIP -->
+<div id="sip" class="screen">
+<div class="tool">
+<button class="back" onclick="home()">← Back</button>
+<h2>📈 SIP Calculator</h2>
+<input id="sipMonthly" type="number" placeholder="Monthly Investment">
+<input id="sipRate" type="number" placeholder="Annual Return %">
+<input id="sipYears" type="number" placeholder="Years">
+<button class="action" onclick="sipCalc()">Calculate SIP</button>
+<div id="sipResult" class="result">Result यहाँ आएगा</div>
+</div>
+</div>
+
+
+<!-- PROFIT -->
+<div id="profit" class="screen">
+<div class="tool">
+<button class="back" onclick="home()">← Back</button>
+<h2>💹 Profit & Loss</h2>
+<input id="cost" type="number" placeholder="Cost Price">
+<input id="sell" type="number" placeholder="Selling Price">
+<button class="action" onclick="profitCalc()">Calculate</button>
+<div id="profitResult" class="result">Result यहाँ आएगा</div>
+</div>
+</div>
+
+
+<!-- FD -->
+<div id="fd" class="screen">
+<div class="tool">
+<button class="back" onclick="home()">← Back</button>
+<h2>🏛️ FD Calculator</h2>
+<input id="fdPrincipal" type="number" placeholder="Principal Amount">
+<input id="fdRate" type="number" placeholder="Annual Rate %">
+<input id="fdYears" type="number" placeholder="Years">
+<button class="action" onclick="fdCalc()">Calculate</button>
+<div id="fdResult" class="result">Result यहाँ आएगा</div>
+</div>
+</div>
+
+
+<!-- SI -->
+<div id="si" class="screen">
+<div class="tool">
+<button class="back" onclick="home()">← Back</button>
+<h2>💵 Simple Interest</h2>
+<input id="siPrincipal" type="number" placeholder="Principal">
+<input id="siRate" type="number" placeholder="Rate %">
+<input id="siYears" type="number" placeholder="Years">
+<button class="action" onclick="siCalc()">Calculate</button>
+<div id="siResult" class="result">Result यहाँ आएगा</div>
+</div>
+</div>
+
+
+<!-- DATE -->
+<div id="date" class="screen">
+<div class="tool">
+<button class="back" onclick="home()">← Back</button>
+<h2>📅 Date Difference</h2>
+<input id="date1" type="date">
+<input id="date2" type="date">
+<button class="action" onclick="dateDiff()">Calculate</button>
+<div id="dateResult" class="result">Result यहाँ आएगा</div>
+</div>
+</div>
+
+
+<!-- BMI -->
+<div id="bmi" class="screen">
+<div class="tool">
+<button class="back" onclick="home()">← Back</button>
+<h2>⚖️ BMI Calculator</h2>
+<input id="weight" type="number" placeholder="Weight (KG)">
+<input id="height" type="number" placeholder="Height (CM)">
+<button class="action" onclick="bmiCalc()">Calculate BMI</button>
+<div id="bmiResult" class="result">Result यहाँ आएगा</div>
+</div>
+</div>
+
+
+<!-- NUMBER -->
+<div id="number" class="screen">
+<div class="tool">
+<button class="back" onclick="home()">← Back</button>
+<h2>🔢 Number to Words</h2>
+<input id="numberInput" type="number" placeholder="Number">
+<button class="action" onclick="numberWords()">Convert</button>
+<div id="numberResult" class="result">Result यहाँ आएगा</div>
+</div>
+</div>
+
+
+<!-- TIME -->
+<div id="time" class="screen">
+<div class="tool">
+<button class="back" onclick="home()">← Back</button>
+<h2>⏰ Time Calculator</h2>
+<input id="time1" type="time">
+<input id="time2" type="time">
+<button class="action" onclick="timeCalc()">Calculate Difference</button>
+<div id="timeResult" class="result">Result यहाँ आएगा</div>
+</div>
+</div>
+
+
+<!-- LENGTH -->
+<div id="length" class="screen">
+<div class="tool">
+<button class="back" onclick="home()">← Back</button>
+<h2>📏 Length Converter</h2>
+<input id="lengthValue" type="number" placeholder="Value">
+
+<select id="fromUnit">
+<option value="m">Meter</option>
+<option value="km">Kilometer</option>
+<option value="cm">Centimeter</option>
+<option value="ft">Feet</option>
+<option value="in">Inch</option>
+</select>
+
+<select id="toUnit">
+<option value="m">Meter</option>
+<option value="km">Kilometer</option>
+<option value="cm">Centimeter</option>
+<option value="ft">Feet</option>
+<option value="in">Inch</option>
+</select>
+
+<button class="action" onclick="lengthCalc()">Convert</button>
+<div id="lengthResult" class="result">Result यहाँ आएगा</div>
+</div>
+</div>
+
+
+<!-- IMAGE -->
+<div id="image" class="screen">
+<div class="tool">
+<button class="back" onclick="home()">← Back</button>
+<h2>🖼️ Image Compressor</h2>
+
+<input id="imageInput" type="file" accept="image/*">
+
+<input id="quality" type="range" min="10" max="100" value="70">
+<div id="qualityText">Quality: 70%</div>
+
+<button class="action" onclick="compressImage()">Compress Image</button>
+
+<div id="imageResult" class="result">Result यहाँ आएगा</div>
+</div>
+</div>
+
+
+<script>
+
+function openTool(id){
+document.getElementById("home").style.display="none";
+document.querySelectorAll(".screen").forEach(function(x){
+x.style.display="none";
+});
+document.getElementById(id).style.display="block";
+window.scrollTo(0,0);
+}
+
+function home(){
+document.querySelectorAll(".screen").forEach(function(x){
+x.style.display="none";
+});
+document.getElementById("home").style.display="block";
+window.scrollTo(0,0);
+}
+
+
+/* PERCENTAGE */
+function percentCalc(){
+let a=parseFloat(document.getElementById("percentValue").value);
+let b=parseFloat(document.getElementById("percentTotal").value);
+let r=document.getElementById("percentResult");
+
+if(isNaN(a)||isNaN(b)||b===0){
+r.innerText="दोनों नंबर भरें।";
+return;
+}
+
+r.innerText=(a/b*100).toFixed(2)+"%";
+}
+
+
+/* AGE */
+function ageCalc(){
+let dob=document.getElementById("dob").value;
+let r=document.getElementById("ageResult");
+
+if(!dob){
+r.innerText="Date of Birth चुनें।";
+return;
+}
+
+let birth=new Date(dob);
+let today=new Date();
+
+let age=today.getFullYear()-birth.getFullYear();
+
+let m=today.getMonth()-birth.getMonth();
+
+if(m<0 || (m===0 && today.getDate()<birth.getDate())){
+age--;
+}
+
+r.innerText="आपकी उम्र: "+age+" Years";
+}
+
+
+/* EMI */
+function emiCalc(){
+let P=parseFloat(document.getElementById("emiPrincipal").value);
+let annual=parseFloat(document.getElementById("emiRate").value);
+let years=parseFloat(document.getElementById("emiYears").value);
+let r=document.getElementById("emiResult");
+
+if(isNaN(P)||isNaN(annual)||isNaN(years)){
+r.innerText="सभी जानकारी भरें।";
+return;
+}
+
+let n=years*12;
+let rate=annual/12/100;
+let emi;
+
+if(rate===0){
+emi=P/n;
+}else{
+emi=P*rate*Math.pow(1+rate,n)/(Math.pow(1+rate,n)-1);
+}
+
+r.innerHTML=
+"Monthly EMI: ₹"+emi.toFixed(2)+
+"<br>Total Payment: ₹"+(emi*n).toFixed(2)+
+"<br>Total Interest: ₹"+(emi*n-P).toFixed(2);
+}
+
+
+/* GST */
+function gstCalc(){
+let a=parseFloat(document.getElementById("gstAmount").value);
+let g=parseFloat(document.getElementById("gstRate").value);
+let r=document.getElementById("gstResult");
+
+if(isNaN(a)||isNaN(g)){
+r.innerText="Amount और GST % भरें।";
+return;
+}
+
+let gst=a*g/100;
+
+r.innerHTML=
+"GST: ₹"+gst.toFixed(2)+
+"<br>Total: ₹"+(a+gst).toFixed(2);
+}
+
+
+/* SALARY */
+function salaryCalc(){
+let d=parseFloat(document.getElementById("days").value);
+let p=parseFloat(document.getElementById("perDay").value);
+let e=parseFloat(document.getElementById("extra").value)||0;
+let r=document.getElementById("salaryResult");
+
+if(isNaN(d)||isNaN(p)){
+r.innerText="काम के दिन और Salary भरें।";
+return;
+}
+
+let total=d*p+e;
+
+r.innerHTML=
+"Basic Salary: ₹"+(d*p).toFixed(2)+
+"<br>Extra: ₹"+e.toFixed(2)+
+"<br>Total Salary: ₹"+total.toFixed(2);
+}
+
+
+/* UNIT */
+function unitCalc(){
+let k=parseFloat(document.getElementById("km").value);
+let r=document.getElementById("unitResult");
+
+if(isNaN(k)){
+r.innerText="Kilometers डालें।";
+return;
+}
+
+r.innerText=k+" KM = "+(k*0.621371).toFixed(2)+" Miles";
+}
+
+
+/* WORD COUNTER */
+function countWords(){
+let t=document.getElementById("text").value.trim();
+let words=t?t.split(/\s+/).length:0;
+let chars=document.getElementById("text").value.length;
+
+document.getElementById("wordResult").innerHTML=
+"Words: "+words+"<br>Characters: "+chars;
+}
+
+function copyText(){
+navigator.clipboard.writeText(
+document.getElementById("text").value
+);
+alert("Text Copy हो गया।");
+}
+
+
+/* DISCOUNT */
+function discountCalc(){
+let p=parseFloat(document.getElementById("price").value);
+let r=parseFloat(document.getElementById("discountRate").value);
+let result=document.getElementById("discountResult");
+
+if(isNaN(p)||isNaN(r)){
+result.innerText="Price और Discount % भरें।";
+return;
+}
+
+let d=p*r/100;
+
+result.innerHTML=
+"Discount: ₹"+d.toFixed(2)+
+"<br>Final Price: ₹"+(p-d).toFixed(2);
+}
+
+
+/* SIP */
+function sipCalc(){
+let m=parseFloat(document.getElementById("sipMonthly").value);
+let annual=parseFloat(document.getElementById("sipRate").value);
+let years=parseFloat(document.getElementById("sipYears").value);
+let result=document.getElementById("sipResult");
+
+if(isNaN(m)||isNaN(annual)||isNaN(years)){
+result.innerText="सभी जानकारी भरें।";
+return;
+}
+
+let n=years*12;
+let r=annual/12/100;
+let future;
+
+if(r===0){
+future=m*n;
+}else{
+future=m*((Math.pow(1+r,n)-1)/r)*(1+r);
+}
+
+let invested=m*n;
+
+result.innerHTML=
+"Invested: ₹"+invested.toFixed(2)+
+"<br>Estimated Value: ₹"+future.toFixed(2)+
+"<br>Estimated Return: ₹"+(future-invested).toFixed(2);
+}
+
+
+/* PROFIT LOSS */
+function profitCalc(){
+let c=parseFloat(document.getElementById("cost").value);
+let s=parseFloat(document.getElementById("sell").value);
+let result=document.getElementById("profitResult");
+
+if(isNaN(c)||isNaN(s)||c<=0){
+result.innerText="Cost और Selling Price भरें।";
+return;
+}
+
+let diff=s-c;
+let percent=Math.abs(diff)/c*100;
+
+if(diff>0){
+result.innerHTML=
+"Profit: ₹"+diff.toFixed(2)+
+"<br>Profit %: "+percent.toFixed(2)+"%";
+}else if(diff<0){
+result.innerHTML=
+"Loss: ₹"+Math.abs(diff).toFixed(2)+
+"<br>Loss %: "+percent.toFixed(2)+"%";
+}else{
+result.innerText="No Profit, No Loss";
+}
+}
+
+
+/* FD */
+function fdCalc(){
+let P=parseFloat(document.getElementById("fdPrincipal").value);
+let r=parseFloat(document.getElementById("fdRate").value);
+let y=parseFloat(document.getElementById("fdYears").value);
+let result=document.getElementById("fdResult");
+
+if(isNaN(P)||isNaN(r)||isNaN(y)){
+result.innerText="सभी जानकारी भरें।";
+return;
+}
+
+let amount=P*Math.pow(1+r/100,y);
+
+result.innerHTML=
+"Interest: ₹"+(amount-P).toFixed(2)+
+"<br>Maturity Amount: ₹"+amount.toFixed(2);
+}
+
+
+/* SIMPLE INTEREST */
+function siCalc(){
+let P=parseFloat(document.getElementById("siPrincipal").value);
+let r=parseFloat(document.getElementById("siRate").value);
+let y=parseFloat(document.getElementById("siYears").value);
+let result=document.getElementById("siResult");
+
+if(isNaN(P)||isNaN(r)||isNaN(y)){
+result.innerText="सभी जानकारी भरें।";
+return;
+}
+
+let interest=P*r*y/100;
+
+result.innerHTML=
+"Simple Interest: ₹"+interest.toFixed(2)+
+"<br>Total Amount: ₹"+(P+interest).toFixed(2);
+}
+
+
+/* DATE DIFFERENCE */
+function dateDiff(){
+let a=document.getElementById("date1").value;
+let b=document.getElementById("date2").value;
+let result=document.getElementById("dateResult");
+
+if(!a||!b){
+result.innerText="दोनों तारीख चुनें।";
+return;
+}
+
+let d1=new Date(a);
+let d2=new Date(b);
+
+let days=Math.round(
+Math.abs(d2-d1)/(1000*60*60*24)
+);
+
+result.innerText="Difference = "+days+" Days";
+}
+
+
+/* BMI */
+function bmiCalc(){
+let w=parseFloat(document.getElementById("weight").value);
+let h=parseFloat(document.getElementById("height").value);
+let result=document.getElementById("bmiResult");
+
+if(isNaN(w)||isNaN(h)||h<=0){
+result.innerText="Weight और Height भरें।";
+return;
+}
+
+let bmi=w/Math.pow(h/100,2);
+let status;
+
+if(bmi<18.5){
+status="Underweight";
+}else if(bmi<25){
+status="Normal Range";
+}else if(bmi<30){
+status="Overweight";
+}else{
+status="Obesity Range";
+}
+
+result.innerHTML=
+"BMI: "+bmi.toFixed(2)+
+"<br>Status: "+status;
+}
+
+
+/* NUMBER TO WORDS */
+function numberWords(){
+let n=parseInt(document.getElementById("numberInput").value);
+let result=document.getElementById("numberResult");
+
+if(isNaN(n)||n<0){
+result.innerText="सही Number डालें।";
+return;
+}
+
+if(n===0){
+result.innerText="Zero";
+return;
+}
+
+result.innerText=toWords(n);
+}
+
+function toWords(n){
+
+let ones=[
+"","One","Two","Three","Four","Five",
+"Six","Seven","Eight","Nine","Ten",
+"Eleven","Twelve","Thirteen","Fourteen",
+"Fifteen","Sixteen","Seventeen",
+"Eighteen","Nineteen"
+];
+
+let tens=[
+"","","Twenty","Thirty","Forty","Fifty",
+"Sixty","Seventy","Eighty","Ninety"
+];
+
+function two(x){
+if(x<20)return ones[x];
+
+return tens[Math.floor(x/10)] +
+(x%10?" "+ones[x%10]:"");
+}
+
+function three(x){
+if(x<100)return two(x);
+
+return ones[Math.floor(x/100)] +
+" Hundred" +
+(x%100?" "+two(x%100):"");
+}
+
+let out="";
+
+if(n>=10000000){
+out+=three(Math.floor(n/10000000))+" Crore ";
+n%=10000000;
+}
+
+if(n>=100000){
+out+=two(Math.floor(n/100000))+" Lakh ";
+n%=100000;
+}
+
+if(n>=1000){
+out+=two(Math.floor(n/1000))+" Thousand ";
+n%=1000;
+}
+
+if(n>0){
+out+=three(n);
+}
+
+return out.trim(
